@@ -15,8 +15,7 @@
         <ul>
             @foreach (var student in Model.Students)
             {
-                <li>@student.StudentId</li>
-                <li>@student.Name</li> <!-- Display student properties as needed -->
+                <li>@student.FirstName @student.LastName</li> <!-- Display student properties as needed -->
             }
         </ul>
     }

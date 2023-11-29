@@ -32,7 +32,8 @@ namespace EnrollmentApplication
                         var student = new Student
                         {
                             StudentId = reader.GetInt32(reader.GetOrdinal("StudentId")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName"))
                             // Set other properties as necessary
                         };
 
