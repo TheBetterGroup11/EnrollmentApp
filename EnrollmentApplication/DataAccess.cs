@@ -12,6 +12,10 @@ namespace EnrollmentApplication
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        /// <summary>
+        /// All students in Student table
+        /// </summary>
+        /// <returns>List of all students in Student table</returns>
         public List<Student> GetAllStudents()
         {
             var students = new List<Student>();
