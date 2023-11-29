@@ -14,6 +14,7 @@ namespace EnrollmentApplication.Pages
 
         public void OnGet()
         {
+
         }
     }
 }
