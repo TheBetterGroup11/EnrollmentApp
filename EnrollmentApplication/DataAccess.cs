@@ -105,35 +105,6 @@ namespace EnrollmentApplication
                 checkCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
                 checkCommand.Parameters.AddWithValue("@Grade", student.Grade);
 
-                /*int exists = (int)checkCommand.ExecuteScalar();
-
-                if (exists > 0)
-                {
-                    ret = "Valid";
-                    _sessionId = student.StudentId;
-                }
-                else
-                {
-                    var insertQuery = "INSERT INTO Student (FirstName, LastName, StudentId) VALUES (@FirstName, @LastName, @StudentId)";
-                    var insertCommand = new SqlCommand(insertQuery, connection);
-
-                    insertCommand.Parameters.AddWithValue("@FirstName", student.FirstName);
-                    insertCommand.Parameters.AddWithValue("@LastName", student.LastName);
-                    insertCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
-
-                    int rowsFound = insertCommand.ExecuteNonQuery();
-
-                    if (rowsFound > 0)
-                    {
-                        ret = "Valid";
-                        _sessionId = student.StudentId;
-                    }
-                    else
-                    {
-                        ret = "Invalid";
-                    }
-                }*/
-
                 if (checkCommand.ExecuteScalar() == null)
                 {
                     var insertQuery = "INSERT INTO Student (FirstName, LastName, StudentId, Grade) VALUES (@FirstName, @LastName, @StudentId, @Grade)";
