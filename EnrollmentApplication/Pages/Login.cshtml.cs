@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EnrollmentApplication.Pages
 {
+    public class LoginModel : PageModel
     {
         public void OnGet()
         {
