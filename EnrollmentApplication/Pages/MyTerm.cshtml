@@ -1,6 +1,39 @@
 ﻿@page
 @model EnrollmentApplication.Pages.My_TermModel
+@inject DataAccess DataAccessService
 @{
+    ViewData["Title"] = "My Term";
 }
 
-<h4>MY TERM!!!!!!!!!!!!!!!!!!!</h4>
+
+<head>
+    <title>Your Courses</title>
+    <link rel="stylesheet" type="text/css" href="site.css" />
+</head>
+<body>
+    <div id="Term-Courses">
+        <h2>Term Courses</h2>
+        <ul>
+            @if (Model.StudentCourses != null) {
+                @foreach (var course in Model.StudentCourses)
+                {
+                    <li>@course.Name</li>
+                }
+            }
+           
+        </ul>
+    </div>
+
+    <div id="Recommended-Courses">
+        <h2>Recommended Courses</h2>
+        <ul>
+            @if (Model.RecommendedCourses != null)
+            {
+                @foreach (var course in Model.RecommendedCourses)
+                {
+                    <li>@course.Name</li>
+                }
+            }
+        </ul>
+    </div>
+</body>

@@ -137,5 +137,17 @@ namespace EnrollmentApplication
             return ret;
         }
 
+        public List<Course> GetStudentCourses()
+        {
+            var courses = new List<Course>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+            }
+
+            return courses;
+        }
+
     }
 }
