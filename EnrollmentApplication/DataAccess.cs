@@ -35,7 +35,6 @@ namespace EnrollmentApplication
                             StudentId = reader.GetInt32(reader.GetOrdinal("StudentId")),
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName"))
-                            // Set other properties as necessary
                         };
 
                         students.Add(student);
@@ -74,7 +73,6 @@ namespace EnrollmentApplication
                             StudentId = reader.GetInt32(reader.GetOrdinal("StudentId")),
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName"))
-                            // Set other properties as necessary
                         };
 
                         ret = "Valid";
@@ -83,6 +81,61 @@ namespace EnrollmentApplication
                     else
                     {
                         ret = "Invalid";
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public string CheckSignUp(string fn, string ln, int id)
+        {
+            var student = new Student
+            {
+                FirstName = fn,
+                LastName = ln,
+                StudentId = id
+            };
+
+            string ret = "Query Error";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var query = "SELECT * FROM Student WHERE FirstName = @FirstName AND LastName = @LastName AND StudentId = @StudentId";
+                var checkCommand = new SqlCommand(query, connection);
+
+                checkCommand.Parameters.AddWithValue("@FirstName", student.FirstName);
+                checkCommand.Parameters.AddWithValue("@LastName", student.LastName);
+                checkCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
+
+                int exists = (int)checkCommand.ExecuteScalar();
+
+                if (exists > 0)
+                {
+                    ret = "Valid";
+                    _sessionId = student.StudentId;
+                }
+                else
+                {
+                    var insertQuery = "INSERT INTO Student (FirstName, LastName, StudentId) VALUES (@FirstName, @LastName, @StudentId)";
+                    var insertCommand = new SqlCommand(insertQuery, connection);
+
+                    insertCommand.Parameters.AddWithValue("@FirstName", student.FirstName);
+                    insertCommand.Parameters.AddWithValue("@LastName", student.LastName);
+                    insertCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
+
+                    int rowsAffected = insertCommand.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        ret = "Student Added";
+                        _sessionId = student.StudentId;
+                    }
+                    else
+                    {
+                        ret = "Insert Failed";
                     }
                 }
             }

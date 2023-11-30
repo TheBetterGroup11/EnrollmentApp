@@ -1,5 +1,6 @@
 ﻿@page
 @model EnrollmentApplication.Pages.LoginModel
+@inject DataAccess DataAccessService
 @{
     ViewData["Title"] = "Login";
 }
@@ -10,7 +11,7 @@
 </head>
 <body>
     <div class="login-form">
-        <form action="/SubmitLogin" method="post">
+        <form method="post">
             <div class="form-group">
                 <label for="FirstName">First Name</label>
                 <input type="text" id="FirstName" name="FirstName" required>

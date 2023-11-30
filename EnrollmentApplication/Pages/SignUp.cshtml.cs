@@ -7,7 +7,6 @@ namespace EnrollmentApplication.Pages
     public class Sign_UpModel : PageModel
     {
         private readonly DataAccess _dataAccessService;
-
         public Student StudentSignUp { get; set; }
 
         public Sign_UpModel(DataAccess dataAccessService)
