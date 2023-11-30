@@ -32,7 +32,7 @@ body {
 
         .form-group input:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #4800ff;
         }
 
 .submit-button {
