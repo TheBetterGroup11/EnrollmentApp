@@ -97,14 +97,15 @@ namespace EnrollmentApplication
             {
                 connection.Open();
 
-                var query = "SELECT * FROM Student WHERE FirstName = @FirstName AND LastName = @LastName AND StudentId = @StudentId";
+                var query = "SELECT * FROM Student WHERE FirstName = @FirstName AND LastName = @LastName AND StudentId = @StudentId AND Grade = @Grade";
                 var checkCommand = new SqlCommand(query, connection);
 
                 checkCommand.Parameters.AddWithValue("@FirstName", student.FirstName);
                 checkCommand.Parameters.AddWithValue("@LastName", student.LastName);
                 checkCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
+                checkCommand.Parameters.AddWithValue("@Grade", student.Grade);
 
-                int exists = (int)checkCommand.ExecuteScalar();
+                /*int exists = (int)checkCommand.ExecuteScalar();
 
                 if (exists > 0)
                 {
@@ -131,6 +132,34 @@ namespace EnrollmentApplication
                     {
                         ret = "Invalid";
                     }
+                }*/
+
+                if (checkCommand.ExecuteScalar() == null)
+                {
+                    var insertQuery = "INSERT INTO Student (FirstName, LastName, StudentId, Grade) VALUES (@FirstName, @LastName, @StudentId, @Grade)";
+                    var insertCommand = new SqlCommand(insertQuery, connection);
+
+                    insertCommand.Parameters.AddWithValue("@FirstName", student.FirstName);
+                    insertCommand.Parameters.AddWithValue("@LastName", student.LastName);
+                    insertCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
+                    insertCommand.Parameters.AddWithValue("@Grade", student.Grade);
+
+                    int rowsFound = insertCommand.ExecuteNonQuery();
+
+                    if (rowsFound > 0)
+                    {
+                        ret = "Valid";
+                        _sessionId = student.StudentId;
+                    }
+                    else
+                    {
+                        ret = "Invalid";
+                    }
+                }
+                else
+                {
+                    ret = "Valid";
+                    _sessionId = student.StudentId;
                 }
             }
 
