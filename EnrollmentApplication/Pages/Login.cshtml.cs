@@ -23,15 +23,18 @@ namespace EnrollmentApplication.Pages
         public IActionResult OnPost()
         {
             string result = _dataAccessService.CheckLogin(StudentLogin.FirstName, StudentLogin.LastName, StudentLogin.StudentId);
-        
+
             if (result == "Valid")
             {
                 return RedirectToPage("/MyTerm");
             }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login credentials.");
 
-            ModelState.AddModelError("", "Invalid login credentials.");
+                return Page();
 
-            return Page();
+            }
         }
     }
 }

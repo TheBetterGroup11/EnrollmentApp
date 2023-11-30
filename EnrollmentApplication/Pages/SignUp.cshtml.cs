@@ -7,6 +7,7 @@ namespace EnrollmentApplication.Pages
     public class Sign_UpModel : PageModel
     {
         private readonly DataAccess _dataAccessService;
+        [BindProperty]
         public Student StudentSignUp { get; set; }
 
         public Sign_UpModel(DataAccess dataAccessService)
@@ -18,9 +19,21 @@ namespace EnrollmentApplication.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            _dataAccessService.CheckLogin(StudentSignUp.FirstName, StudentSignUp.LastName, StudentSignUp.StudentId);
+            string result = _dataAccessService.CheckSignUp(StudentSignUp);
+
+            if (result == "Valid")
+            {
+                return RedirectToPage("/MyTerm");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid sign in credentials.");
+
+                return Page();
+            }
+            
         }
     }
 }

@@ -88,14 +88,8 @@ namespace EnrollmentApplication
             return ret;
         }
 
-        public string CheckSignUp(string fn, string ln, int id)
+        public string CheckSignUp(Student student)
         {
-            var student = new Student
-            {
-                FirstName = fn,
-                LastName = ln,
-                StudentId = id
-            };
 
             string ret = "Query Error";
 
@@ -126,16 +120,16 @@ namespace EnrollmentApplication
                     insertCommand.Parameters.AddWithValue("@LastName", student.LastName);
                     insertCommand.Parameters.AddWithValue("@StudentId", student.StudentId);
 
-                    int rowsAffected = insertCommand.ExecuteNonQuery();
+                    int rowsFound = insertCommand.ExecuteNonQuery();
 
-                    if (rowsAffected > 0)
+                    if (rowsFound > 0)
                     {
-                        ret = "Student Added";
+                        ret = "Valid";
                         _sessionId = student.StudentId;
                     }
                     else
                     {
-                        ret = "Insert Failed";
+                        ret = "Invalid";
                     }
                 }
             }

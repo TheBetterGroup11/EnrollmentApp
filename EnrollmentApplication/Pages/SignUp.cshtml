@@ -10,22 +10,26 @@
     <link rel="stylesheet" type="text/css" href="generic.css" />
 </head>
 <body>
-    <div class="login-form">
-        <form action="/SubmitSignUp" method="post">
+    <div class="signup-form">
+        <form method="post">
             <h1>SIGN UP</h1>
             <div class="form-group">
                 <label for="FirstName">First Name</label>
-                <input type="text" id="FirstName" name="FirstName" required>
+                <input type="text" id="FirstName" name="FirstName" required/>
             </div>
             <div class="form-group">
                 <label for="LastName">Last  Name</label>
-                <input type="text" id="LastName" name="LastName" required>
+                <input type="text" id="LastName" name="LastName" required/>
             </div>
             <div class="form-group">
                 <label for="StudentId">Student  ID</label>
-                <input type="text" id="StudentId" name="StudentId" required>
+                <input type="text" id="StudentId" name="StudentId" required/>
             </div>
-            <button type="submit" class="submit-button">Sign Up</button>
+            <div class="form-group">
+                <label for="Grade">        Grade</label>
+                <input type="text" id="Grade" name="Grade" required />
+            </div>
+            <button type="submit" class="submit-button">Login</button>
         </form>
     </div>
 </body>
