@@ -1,4 +1,8 @@
+using EnrollmentApplication;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<DataAccess>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
