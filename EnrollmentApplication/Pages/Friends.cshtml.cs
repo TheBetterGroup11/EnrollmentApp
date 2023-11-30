@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EnrollmentApplication.Pages
 {
+    public class FriendsModel : PageModel
     {
-            _logger = logger;
-        }
-
         public void OnGet()
         {
 
