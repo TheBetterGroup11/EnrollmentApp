@@ -134,3 +134,20 @@ FROM
 WHERE 
     S.StudentId = 123 AND
     SC.Status = 'Complete';
+
+SELECT *
+FROM Course C
+	INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId
+	INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId
+WHERE S.StudentId = @StudentId AND
+	  SC.Status = 'In Progress';
+
+
+
+SELECT *
+FROM Course C
+	INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId
+	INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId
+WHERE S.StudentId = 123 AND
+	  C.CourseId != 1220 AND
+	  TermId = 0;

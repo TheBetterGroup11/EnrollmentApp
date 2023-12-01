@@ -9,6 +9,14 @@ namespace EnrollmentApplication
         public int _sessionId;
         public int SessionId {  get { return _sessionId; } }
 
+        private int _sessionTerm;
+        public int SessionTerm
+        {
+            get { return _sessionTerm; }
+            set { _sessionTerm = value; }
+        }
+
+
         public DataAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -208,6 +216,38 @@ namespace EnrollmentApplication
                 command.Parameters.AddWithValue("@StudentId", _sessionId);
             }
             return 0;
+        }
+
+        public List<Course> SessionCoursesMinus(List<Course> current, int id)
+        {
+            var newCurrent = new List<Course>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Course C INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId WHERE S.StudentId = @StudentId AND C.CourseId != @CourseId AND TermId = @TermId;";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@CourseId", id);
+                command.Parameters.AddWithValue("@StudentId", _sessionId);
+                command.Parameters.AddWithValue("@TermId", _sessionTerm);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var course = new Course
+                        {
+                            CourseId = reader.GetInt32(reader.GetOrdinal("CourseId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                            CreditHours = reader.GetInt32(reader.GetOrdinal("CreditHours"))
+                        };
+
+                        newCurrent.Add(course);
+                    }
+                }
+            }
+            return newCurrent;
         }
     }
 }
