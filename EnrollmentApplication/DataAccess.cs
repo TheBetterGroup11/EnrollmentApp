@@ -6,7 +6,7 @@ namespace EnrollmentApplication
     public class DataAccess
     {
         private readonly string _connectionString;
-        private int _sessionId;
+        public int _sessionId;
         public int SessionId {  get { return _sessionId; } }
 
         public DataAccess(IConfiguration configuration)

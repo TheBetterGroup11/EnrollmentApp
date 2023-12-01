@@ -19,6 +19,10 @@ namespace EnrollmentApplication.Pages
 
         public void OnGet()
         {
+            if(_dataAccessService._sessionId == null)
+            {
+
+            }
             //StudentCourses = _dataAccessService.GetStudentCourses();
             _myTermStudent = _dataAccessService.SearchForAccount();
         }
