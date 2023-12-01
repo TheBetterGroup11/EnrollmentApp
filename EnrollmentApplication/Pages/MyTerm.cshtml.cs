@@ -18,7 +18,7 @@ namespace EnrollmentApplication.Pages
 
         public void OnGet()
         {
-            StudentCourses = _dataAccessService.GetStudentCourses();
+            //StudentCourses = _dataAccessService.GetStudentCourses();
         }
     }
 }

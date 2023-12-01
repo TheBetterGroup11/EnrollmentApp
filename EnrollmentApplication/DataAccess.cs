@@ -137,6 +137,12 @@ namespace EnrollmentApplication
             return ret;
         }
 
+        public List<Student> GetStudentCourses()
+        {
+            var students = new List<Student>();
+
+            return students;
+        }
 
         public Student SearchForAccount()
         {
