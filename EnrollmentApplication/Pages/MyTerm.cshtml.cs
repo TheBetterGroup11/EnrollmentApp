@@ -8,6 +8,7 @@ namespace EnrollmentApplication.Pages
     {
         private readonly DataAccess _dataAccessService;
 
+        public Student _myTermStudent { get; set; }
         public List<Course> StudentCourses { get; set; }
         public List<Course> RecommendedCourses { get; set; }
 
@@ -19,6 +20,7 @@ namespace EnrollmentApplication.Pages
         public void OnGet()
         {
             //StudentCourses = _dataAccessService.GetStudentCourses();
+            _myTermStudent = _dataAccessService.SearchForAccount();
         }
     }
 }

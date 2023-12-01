@@ -6,34 +6,30 @@
 }
 
 
-<head>
-    <title>Your Courses</title>
-    <link rel="stylesheet" type="text/css" href="site.css" />
-</head>
+<header>
+    <h1>@Model._myTermStudent.FirstName, @Model._myTermStudent.Grade</h1>
+</header>
 <body>
-    <div id="Term-Courses">
-        <h2>Term Courses</h2>
-        <ul>
-            @if (Model.StudentCourses != null) {
-                @foreach (var course in Model.StudentCourses)
-                {
-                    <li>@course.Name</li>
-                }
-            }
-           
-        </ul>
-    </div>
+    <div id="container">
+        <div class="card">
+            <h2>Fall 20</h2>
+            <ul>
+                <li><button>Math 221</button></li>
+                <li><button>CIS 300</button></li>
+                <li><button>CHM 230</button></li>
+                <li><button>Add Course...</button></li>
+            </ul>
+        </div>
 
-    <div id="Recommended-Courses">
-        <h2>Recommended Courses</h2>
-        <ul>
-            @if (Model.RecommendedCourses != null)
-            {
-                @foreach (var course in Model.RecommendedCourses)
-                {
-                    <li>@course.Name</li>
-                }
-            }
-        </ul>
+        <div class="card ">
+            <h2>Recommendations</h2>
+            <ul>
+                <!-- List recommendations here -->
+                <li>Recommended Course 1</li>
+                <li>Recommended Course 2</li>
+                <li>Recommended Course 3</li>
+                <!-- Add more list items as needed -->
+            </ul>
+        </div>
     </div>
 </body>
