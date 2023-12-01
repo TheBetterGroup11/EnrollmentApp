@@ -45,7 +45,6 @@ namespace EnrollmentApplication
             return students;
         }
 
-
         public string CheckLogin(string fn, string ln, int id)
         {
             var student = new Student();
