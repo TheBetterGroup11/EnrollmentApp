@@ -144,7 +144,7 @@ WHERE S.StudentId = @StudentId AND
 
 
 
-SELECT *
+SELECT C.CourseId, C.[Name], C.DepartmentId, C.CreditHours
 FROM Course C
 	INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId
 	INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId

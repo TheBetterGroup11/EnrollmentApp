@@ -8,24 +8,20 @@ namespace EnrollmentApplication.Pages
     {
         private readonly DataAccess _dataAccessService;
 
-        public Student _myTermStudent { get; set; }
+        public Student SessionStudent { get; set; }
 
-        public List<Course> _studentCourses;
-        public List<Course> StudentCourses
-        {
-            get { return _dataAccessService.GetStudentCourses(_dataAccessService.SessionId); }
-            set { _studentCourses = value; }
-        }
+        public List<Course> StudentCourses { get; set; }
         public List<Course> RecommendedCourses { get; set; }
 
         public My_TermModel(DataAccess dataAccessService)
         {
             _dataAccessService = dataAccessService;
+            StudentCourses = _dataAccessService.GetStudentCourses(_dataAccessService.SessionId);
         }
 
         public void OnGet()
         {
-            _myTermStudent = _dataAccessService.SearchForAccount(_dataAccessService._sessionId);
+            SessionStudent = _dataAccessService.SearchForAccount(_dataAccessService.SessionId);
             
             //RecommendedCourses = _dataAccessService.GetRecommendedCourses();
             RecommendedCourses = StudentCourses;

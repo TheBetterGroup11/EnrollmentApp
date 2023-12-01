@@ -23,7 +23,7 @@ namespace EnrollmentApplication.Pages
 
         public void OnGet()
         {
-            Student s = _dataAccessService.SearchForAccount(_dataAccessService._sessionId);
+            Student s = _dataAccessService.SearchForAccount(_dataAccessService.SessionId);
             _fullName = s.FirstName + s.LastName;
             _studentID = s.StudentId;
             _grade = s.Grade;
