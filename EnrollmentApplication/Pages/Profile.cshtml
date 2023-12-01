@@ -1,4 +1,36 @@
 ﻿@page
 @model EnrollmentApplication.Pages.ProfileModel
+@inject DataAccess DataAccessService
 @{
+    ViewData["Title"] = "Profile";
 }
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" type="text/css" href="generic.css" />
+</head>
+<body>
+    <div class="user-profile">
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>@Model._fullName</td>
+            </tr>
+            <tr>
+                <th>Student ID:</th>
+                <td>@Model._studentID</td>
+            </tr>
+            <tr>
+                <th>Grade:</th>
+                <td>@Model._grade</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>something@gmail.com</td>
+            </tr>
+            <tr>
+                <th>Credits Completed:</th>
+                <td>@Model._credits</td>
+            </tr>
+        </table>
+    </div>
+</body>
