@@ -7,6 +7,7 @@ namespace EnrollmentApplication
     {
         private readonly string _connectionString;
         private int _sessionId;
+        public int SessionId {  get { return _sessionId; } }
 
         public DataAccess(IConfiguration configuration)
         {
@@ -137,5 +138,48 @@ namespace EnrollmentApplication
             return ret;
         }
 
+
+        public Student SearchForAccount()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Student WHERE StudentId = @StudentId";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@StudentId", _sessionId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var searched = new Student
+                        {
+                            StudentId = reader.GetInt32(reader.GetOrdinal("StudentId")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            Grade = reader.GetString(reader.GetOrdinal("Grade"))
+                        };
+
+                        return searched;
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        public int GetCompletedCredits(Student student)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Student WHERE StudentId = @StudentId";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@StudentId", _sessionId);
+            }
+            return 0;
+        }
     }
 }
