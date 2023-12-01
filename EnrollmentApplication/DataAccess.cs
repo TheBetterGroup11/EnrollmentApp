@@ -176,15 +176,18 @@ namespace EnrollmentApplication
 
         public int GetCompletedCredits(Student student)
         {
+            int credits = 0;
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var query = "SELECT * FROM Student WHERE StudentId = @StudentId";
+                var query = "SELECT SUM(C.CreditHours) AS TotalCreditHours FROM ScheduledCourse SC INNER JOIN Schedule S ON SC.ScheduleId = S.ScheduleId INNER JOIN Course C ON SC.CourseId = C.CourseId WHERE S.StudentId = @StudentId AND SC.Status = 'Complete';";
                 var command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@StudentId", _sessionId);
+
+                credits = (int)command.ExecuteScalar();
             }
-            return 0;
+            return credits;
         }
     }
 }
