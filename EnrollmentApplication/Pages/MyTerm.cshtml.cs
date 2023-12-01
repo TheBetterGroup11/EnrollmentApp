@@ -19,12 +19,17 @@ namespace EnrollmentApplication.Pages
 
         public void OnGet()
         {
-            if(_dataAccessService._sessionId == null)
-            {
+            _myTermStudent = _dataAccessService.SearchForAccount(_dataAccessService._sessionId);
+            StudentCourses = _dataAccessService.GetStudentCourses(_dataAccessService._sessionId);
+            //RecommendedCourses = _dataAccessService.GetRecommendedCourses();
+            RecommendedCourses = StudentCourses;
 
-            }
-            //StudentCourses = _dataAccessService.GetStudentCourses();
-            _myTermStudent = _dataAccessService.SearchForAccount();
+        }
+
+        public IActionResult OnPostRemoveCourse(int courseId)
+        {
+            //_dataAccessService.RemoveCourse(courseId); // Assuming this method removes the course
+            return RedirectToPage();
         }
     }
 }

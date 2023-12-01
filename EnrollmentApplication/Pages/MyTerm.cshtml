@@ -5,7 +5,6 @@
     ViewData["Title"] = "My Term";
 }
 
-
 <header>
     <h1>@Model._myTermStudent.FirstName, @Model._myTermStudent.Grade</h1>
 </header>
@@ -15,23 +14,25 @@
             <form method="post">
                 <h2>Fall 20</h2>
                 <ul class="list-unstyled">
-                    <li><button class="btn btn-primary btn-block">Math 221</button></li>
-                    <li><button class="btn btn-primary btn-block">CIS 300</button></li>
-                    <li><button class="btn btn-primary btn-block">CHM 230</button></li>
-                    <li><button class="btn btn-secondary btn-block">Add Course...</button></li>
+                    @foreach (var course in Model.StudentCourses)
+                    {
+                        <li>
+                            <button type="submit" name="removeCourse" value="@course.CourseId" class="btn btn-primary btn-block">@course.Name</button>
+                        </li>
+                    }
+                    <li><a class="btn btn-secondary btn-block" href="/AddCourse">Add Course...</a></li>
                 </ul>
             </form>
         </div>
 
-        <div class="card ">
+        <div class="card">
             <form>
                 <h2>Recommendations</h2>
-                <ul>
-                    <!-- List recommendations here -->
-                    <li>Recommended Course 1</li>
-                    <li>Recommended Course 2</li>
-                    <li>Recommended Course 3</li>
-                    <!-- Add more list items as needed -->
+                <ul class="list-unstyled">
+                    @foreach (var course in Model.RecommendedCourses)
+                    {
+                        <li>@course.Name</li>
+                    }
                 </ul>
             </form>
         </div>

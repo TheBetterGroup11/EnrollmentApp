@@ -137,14 +137,37 @@ namespace EnrollmentApplication
             return ret;
         }
 
-        public List<Student> GetStudentCourses()
+        public List<Course> GetStudentCourses(int id)
         {
-            var students = new List<Student>();
+            var students = new List<Course>();
 
-            return students;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Course C INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId WHERE S.StudentId = @StudentId AND SC.Status = 'In Progress';";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@StudentId", id);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var aCourse = new Course
+                        {
+                            CourseId = reader.GetInt32(reader.GetOrdinal("CourseId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                            CreditHours = reader.GetInt32(reader.GetOrdinal("CreditHours"))
+                        };
+
+                    }
+                }
+            }
+                return students;
         }
 
-        public Student SearchForAccount()
+        public Student SearchForAccount(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -152,7 +175,7 @@ namespace EnrollmentApplication
                 var query = "SELECT * FROM Student WHERE StudentId = @StudentId";
                 var command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@StudentId", _sessionId);
+                command.Parameters.AddWithValue("@StudentId", id);
 
                 using (var reader = command.ExecuteReader())
                 {
