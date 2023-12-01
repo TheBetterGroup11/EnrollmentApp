@@ -6,8 +6,10 @@ namespace EnrollmentApplication
     public class DataAccess
     {
         private readonly string _connectionString;
-        private int _sessionId;
-        public int SessionId {  get { return _sessionId; } }
+        public int SessionId { get; set; } = 123;
+        public int SessionTerm { get; set; }
+        public int TermId { get; set; } = 0;
+
 
         public DataAccess(IConfiguration configuration)
         {
@@ -76,7 +78,7 @@ namespace EnrollmentApplication
                         };
 
                         ret = "Valid";
-                        _sessionId = student.StudentId;
+                        SessionId = student.StudentId;
                     }
                     else
                     {
@@ -120,7 +122,7 @@ namespace EnrollmentApplication
                     if (rowsFound > 0)
                     {
                         ret = "Valid";
-                        _sessionId = student.StudentId;
+                        SessionId = student.StudentId;
                     }
                     else
                     {
@@ -130,21 +132,45 @@ namespace EnrollmentApplication
                 else
                 {
                     ret = "Valid";
-                    _sessionId = student.StudentId;
+                    SessionId = student.StudentId;
                 }
             }
 
             return ret;
         }
 
-        public List<Student> GetStudentCourses()
+        public List<Course> GetStudentCourses(int id)
         {
-            var students = new List<Student>();
+            var courses = new List<Course>();
 
-            return students;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT C.CourseId, C.[Name], C.DepartmentId, C.CreditHours\r\nFROM Course C\r\n\tINNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId\r\n\tINNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId\r\nWHERE S.StudentId = @StudentId AND\r\n\t  SC.Status = 'In Progress';";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@StudentId", id);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var aCourse = new Course
+                        {
+                            CourseId = reader.GetInt32(reader.GetOrdinal("CourseId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                            CreditHours = reader.GetInt32(reader.GetOrdinal("CreditHours"))
+                        };
+
+                        courses.Add(aCourse);
+                    }
+                }
+            }
+                return courses;
         }
 
-        public Student SearchForAccount()
+        public Student SearchForAccount(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -152,7 +178,7 @@ namespace EnrollmentApplication
                 var query = "SELECT * FROM Student WHERE StudentId = @StudentId";
                 var command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@StudentId", _sessionId);
+                command.Parameters.AddWithValue("@StudentId", id);
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -183,11 +209,41 @@ namespace EnrollmentApplication
                 var query = "SELECT SUM(C.CreditHours) AS TotalCreditHours FROM ScheduledCourse SC INNER JOIN Schedule S ON SC.ScheduleId = S.ScheduleId INNER JOIN Course C ON SC.CourseId = C.CourseId WHERE S.StudentId = @StudentId AND SC.Status = 'Complete';";
                 var command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@StudentId", _sessionId);
-
-                credits = (int)command.ExecuteScalar();
+                command.Parameters.AddWithValue("@StudentId", SessionId);
             }
             return credits;
+        }
+
+        public List<Course> SessionCoursesMinus(List<Course> current, int id)
+        {
+            var newCurrent = new List<Course>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT C.CourseId, C.[Name], C.DepartmentId, C.CreditHours FROM Course C INNER JOIN ScheduledCourse SC ON SC.CourseId = C.CourseId INNER JOIN Schedule S ON S.ScheduleId = SC.ScheduleId WHERE S.StudentId = @StudentId AND C.CourseId != @CourseId AND TermId = @TermId;";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@CourseId", id);
+                command.Parameters.AddWithValue("@StudentId", SessionId);
+                command.Parameters.AddWithValue("@TermId", SessionTerm);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var course = new Course
+                        {
+                            CourseId = reader.GetInt32(reader.GetOrdinal("CourseId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                            CreditHours = reader.GetInt32(reader.GetOrdinal("CreditHours"))
+                        };
+
+                        newCurrent.Add(course);
+                    }
+                }
+            }
+            return newCurrent;
         }
     }
 }

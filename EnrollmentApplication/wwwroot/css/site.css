@@ -30,24 +30,11 @@ body {
     background-color: #f0f0f0;
 }
 
-.login-form {
+.default-form {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.signup-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.purple-container {
-    background-color: #563d7c;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),
-                inset 0 -1px 0 rgba(0,0,0,.1);
 }
 
 .form-group {
@@ -113,3 +100,23 @@ body {
             border-bottom: none;
         }
 
+#container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+    .b {
+        width: 30px;
+        background-color: aqua
+    }
+
+.card {
+    border: 2px solid #cccccc;
+    padding: 10px;
+    width: 45%;
+    background-color: mediumpurple;
+}
+
+h2 {
+    text-align: center;
+}
