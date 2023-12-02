@@ -199,7 +199,6 @@ namespace EnrollmentApplication
             return null;
         }
 
-
         public int GetCompletedCredits(Student student)
         {
             int credits = 0;
