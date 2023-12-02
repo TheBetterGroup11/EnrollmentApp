@@ -209,6 +209,15 @@ namespace EnrollmentApplication
                 var command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@StudentId", SessionId);
+
+                try
+                {
+                    credits = (int)command.ExecuteScalar();
+                }
+                catch
+                {
+                    credits = 0;
+                }
             }
             return credits;
         }
