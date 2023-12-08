@@ -11,7 +11,7 @@ namespace EnrollmentApplication
         public int SessionId { get; set; } = 123;
         public int SessionTerm { get; set; }
         public int TermId { get; set; } = 0;
-
+        public int nextNum = 100;
 
         public DataAccess(IConfiguration configuration)
         {
@@ -321,7 +321,7 @@ namespace EnrollmentApplication
 
             int newCourseId = int.Parse($"{departmentNumber}{courseNumber:D3}");
             Random random = new Random();
-            int scheduledCourseId = random.Next(100, 1000);
+            int scheduledCourseId = random.Next(100, 99999);
 
             var newScheduledCourse = new ScheduledCourse
             {

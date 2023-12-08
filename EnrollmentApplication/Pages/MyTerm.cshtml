@@ -11,21 +11,11 @@
             }
         </style>
     </header>
-    <body>
-        <div class="default-form1">
-            <form method="post">
-                <h3>Add class:</h3>
-                <div class="form-group1">
-                    <input type="text" name="courseName">
-                    <button class="submit-button1" name="add" asp-page-handler="AddCourse">Add</button>
-                    <button class="submit-button1" name="remove" asp-page-handler="RemoveCourse">Remove</button>
-                </div>
-            </form>
-        </div>
-    </body>
+
+
     <body>
         <div class="default-form">
-            <h2>Your Courses</h2>
+            <h2>My Term</h2>
             <table class="styled-table">
                 <tr>
                     <th>ID</th>
@@ -39,13 +29,22 @@
                     </tr>
                 }
             </table>
-
+        </div>
+        <div class="default-form">
+            <form method="post">
+                <h3>Add class:</h3>
+                <div class="form-group1">
+                    <input type="text" name="courseName">
+                    <button class="submit-button1" name="add" asp-page-handler="AddCourse">Add</button>
+                    <button class="submit-button1" name="remove" asp-page-handler="RemoveCourse">Remove</button>
+                </div>
+            </form>
         </div>
     </body>
 
     <body>
         <div class="default-form">
-            <h2>Recommended For You</h2>
+            <h2>Recommended For Me</h2>
             <table class="styled-table">
                 <tr>
                     <th>ID</th>
@@ -54,12 +53,12 @@
                 </tr>
                 <tr>
                     <td>MATH 220</td>
-                    <td>Calc 1</td>
+                    <td>Analytical Geometry and Calculus 1</td>
                     <td>3 Enrolled</td>
                 </tr>
                 <tr>
                     <td>CHM 210</td>
-                    <td>Chem 1</td>
+                    <td>Chemistry 1</td>
                     <td>3 Enrolled</td>
                 </tr>
                 <tr>

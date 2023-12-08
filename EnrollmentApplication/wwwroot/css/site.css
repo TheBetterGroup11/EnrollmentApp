@@ -54,16 +54,16 @@ body {
     overflow: hidden;
 }
 
-    .styled-table th, .styled-table td {
-        text-align: left;
+    .styled-table1 th, .styled-table1 td {
+        text-align: center;
         padding: 10px;
         border-bottom: 1px solid #ddd;
     }
 
-    .styled-table th {
+    .styled-table1 th {
         background-color: #512888;
         color: white;
-        width: 10%
+        width: 20%
     }
 
     .styled-table tr:last-child td {
