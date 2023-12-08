@@ -16,10 +16,6 @@ namespace EnrollmentApplication
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        /// <summary>
-        /// All students in Student table
-        /// </summary>
-        /// <returns>List of all students in Student table</returns>
         public List<Student> GetAllStudents()
         {
             var students = new List<Student>();
@@ -253,5 +249,53 @@ namespace EnrollmentApplication
             }
             return newCurrent;
         }
+
+        public List<PrettyCourses> GetPrettyCourses(List<Course> studentCourses)
+        {
+            List<PrettyCourses> prettyCoursesList = new List<PrettyCourses>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                foreach (var course in studentCourses)
+                {
+                    // Assuming you have a method to get the department code by department ID
+                    string departmentCode = GetDepartmentCode(course.DepartmentId, connection);
+
+                    PrettyCourses prettyCourse = new PrettyCourses
+                    {
+                        // Assuming the CourseId is at least 3 digits and you want the last 3 digits
+                        PrettyId = departmentCode + " " + course.CourseId.ToString().Substring(course.CourseId.ToString().Length - 3),
+                        PrettyName = course.Name
+                    };
+
+                    prettyCoursesList.Add(prettyCourse);
+                }
+            }
+
+            return prettyCoursesList;
+        }
+
+        private string GetDepartmentCode(int departmentId, SqlConnection connection)
+        {
+            string returnString = "";
+
+            var query = "SELECT Code FROM Department WHERE DepartmentId = @DepartmentId";
+            var command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@DepartmentId", departmentId);
+            
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    returnString = reader.GetString(reader.GetOrdinal("Code"));
+                }
+            }
+            return returnString;
+        }
+
+
     }
 }

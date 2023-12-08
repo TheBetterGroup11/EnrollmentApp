@@ -3,39 +3,42 @@
 @inject DataAccess DataAccessService
 @{
     ViewData["Title"] = "My Term";
-}
-
-<header>
-    <h1>@Model.SessionStudent.FirstName, @Model.SessionStudent.Grade</h1>
-    <link rel="stylesheet" type="text/css" href="site.css" />
-</header>
-<body>
-    <div id="container">
+    <header>
+        <link rel="stylesheet" type="text/css" href="site.css" />
+        <style>
+            table {
+                border: 1px black;
+            }
+        </style>
+    </header>
+    <body>
         <div class="default-form">
             <form method="post">
-                <h2>Fall 20</h2>
-                <ul class="list-unstyled">
-                    @foreach (var course in Model.StudentCourses)
-                    {
-                        <li>
-                            <button type="submit" name="removeCourse" value="@course.CourseId" class="btn btn-primary btn-block">@course.CourseId</button>
-                        </li>
-                    }
-                    <li><a class="btn btn-secondary btn-block" href="/AddCourse">Add Course...</a></li>
-                </ul>
+                <h3>Add class:</h3>
+                <div class="form-group1">
+                    <input type="text" name="newCourse">
+                    <button class="submit-button1" name="add">add</button>
+                    <button class="submit-button1" name="remove">remove</button>
+                </div>
             </form>
         </div>
-
+    </body>
+    <body>
         <div class="default-form">
-            <form>
-                <h2>Recommendations</h2>
-                <ul class="list-unstyled">
-                    @foreach (var course in Model.RecommendedCourses)
-                    {
-                        <li>@course.Name</li>
-                    }
-                </ul>
-            </form>
+            <table class="styled-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+                @foreach (var c in Model.PrettyCourses)
+                {
+                    <tr>
+                        <td>@c.PrettyId</td>
+                        <td>@c.PrettyName</td>
+                    </tr>
+                }
+            </table>
+
         </div>
-    </div>
-</body>
+    </body>
+}

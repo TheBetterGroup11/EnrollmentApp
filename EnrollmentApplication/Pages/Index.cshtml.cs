@@ -9,6 +9,7 @@ namespace EnrollmentApplication.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly DataAccess _dataAccess;
 
+        [BindProperty]
         public List<Student> Students { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
