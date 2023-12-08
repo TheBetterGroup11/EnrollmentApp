@@ -31,8 +31,14 @@ body {
 }
 
 .default-form {
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.default-form1 {
     width: 45%;
-    align-items: center;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
