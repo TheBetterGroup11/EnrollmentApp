@@ -16,15 +16,16 @@
             <form method="post">
                 <h3>Add class:</h3>
                 <div class="form-group1">
-                    <input type="text" name="newCourse">
-                    <button class="submit-button1" name="add">add</button>
-                    <button class="submit-button1" name="remove">remove</button>
+                    <input type="text" name="courseName">
+                    <button class="submit-button1" name="add" asp-page-handler="AddCourse">Add</button>
+                    <button class="submit-button1" name="remove" asp-page-handler="RemoveCourse">Remove</button>
                 </div>
             </form>
         </div>
     </body>
     <body>
         <div class="default-form">
+            <h2>Your Courses</h2>
             <table class="styled-table">
                 <tr>
                     <th>ID</th>
@@ -37,6 +38,50 @@
                         <td>@c.PrettyName</td>
                     </tr>
                 }
+            </table>
+
+        </div>
+    </body>
+
+    <body>
+        <div class="default-form">
+            <h2>Recommended For You</h2>
+            <table class="styled-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Friends</th>
+                </tr>
+                <tr>
+                    <td>MATH 220</td>
+                    <td>Calc 1</td>
+                    <td>3 Enrolled</td>
+                </tr>
+                <tr>
+                    <td>CHM 210</td>
+                    <td>Chem 1</td>
+                    <td>3 Enrolled</td>
+                </tr>
+                <tr>
+                    <td>CIS 560</td>
+                    <td>Database Systems Concepts</td>
+                    <td>1 Enrolled</td>
+                </tr>
+                <tr>
+                    <td>CIS 505</td>
+                    <td>Introduction to Programming Languages</td>
+                    <td>1 Enrolled</td>
+                </tr>
+                <tr>
+                    <td>CIS 501</td>
+                    <td>Software Architecture and Design</td>
+                    <td>1 Enrolled</td>
+                </tr>
+                <tr>
+                    <td>ENGL 415</td>
+                    <td>Written Communication for Engineers</td>
+                    <td>1 Enrolled</td>
+                </tr>
             </table>
 
         </div>

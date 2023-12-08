@@ -6,11 +6,11 @@
 }
 <head>
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" type="text/css" href="generic.css" />
+    <link rel="stylesheet" type="text/css" href="site.css" />
 </head>
 <body>
-    <div class="user-profile">
-        <table>
+    <div class="default-form">
+        <table class="styled-table1">
             <tr>
                 <th>Name:</th>
                 <td>@Model._fullName</td>
@@ -22,10 +22,6 @@
             <tr>
                 <th>Grade:</th>
                 <td>@Model._grade</td>
-            </tr>
-            <tr>
-                <th>Email:</th>
-                <td>something@gmail.com</td>
             </tr>
             <tr>
                 <th>Credits Completed:</th>

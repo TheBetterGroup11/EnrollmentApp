@@ -5,22 +5,26 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Find Courses with Friends</h1>
-    <p>Login and schedule your term!</p>
+    <link rel="stylesheet" type="text/css" href="site.css" />
+    <div class="default-form">
+        <h1 class="display-4">Find Courses with Friends</h1>
+        <h2>Login and schedule your term!</h2>
     
+        <button class="submit-button2" id="openLoginPage">Login</button>
+        <button class="submit-button2" id ="openSignUpPage">Sign Up</button>
+
+        <script>
+            document.getElementById("openSignUpPage").addEventListener("click", function () {
+                window.location.href = "/SignUp";
+            });
+        </script>
+        <script>
+            document.getElementById("openLoginPage").addEventListener("click", function () {
+                window.location.href = "/Login";
+            });
+        </script>
+    </div>
 
 
-    <button id="openLoginPage">Login</button>
-    <button id="openSignUpPage">Sign Up</button>
-
-    <script>
-        document.getElementById("openSignUpPage").addEventListener("click", function () {
-            window.location.href = "/SignUp";
-        });
-    </script>
-    <script>
-        document.getElementById("openLoginPage").addEventListener("click", function () {
-            window.location.href = "/Login";
-        });
-    </script>
+   
 </div>

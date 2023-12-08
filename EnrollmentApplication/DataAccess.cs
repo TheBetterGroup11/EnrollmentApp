@@ -1,5 +1,7 @@
 ﻿using EnrollmentApplication.Models;
+using Microsoft.AspNetCore.SignalR;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace EnrollmentApplication
 {
@@ -16,32 +18,35 @@ namespace EnrollmentApplication
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public List<Student> GetAllStudents()
+        public List<Friend> GetStudentFriends()
         {
-            var students = new List<Student>();
+            var friends = new List<Friend>();
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var command = new SqlCommand("SELECT * FROM Student", connection);
+                var command = new SqlCommand("SELECT S.FirstName, S.LastName, S.StudentId, S.Grade\r\nFROM Friend F\r\n\tINNER JOIN Student S ON S.StudentId = F.FriendStudentId\r\nWHERE F.StudentId = @StudentId;", connection);
+                command.Parameters.AddWithValue("@StudentId", SessionId);
 
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var student = new Student
+                        var friend = new Friend
                         {
-                            StudentId = reader.GetInt32(reader.GetOrdinal("StudentId")),
+                            FriendId = reader.GetInt32(reader.GetOrdinal("StudentId")),
+                            StudentId = SessionId,
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                            LastName = reader.GetString(reader.GetOrdinal("LastName"))
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            Grade = reader.GetString(reader.GetOrdinal("Grade"))
                         };
 
-                        students.Add(student);
+                        friends.Add(friend);
                     }
                 }
             }
 
-            return students;
+            return friends;
         }
 
         public string CheckLogin(string fn, string ln, int id)
@@ -296,6 +301,91 @@ namespace EnrollmentApplication
             return returnString;
         }
 
+        public void AddScheduledCourse(string courseName)
+        {
+            var parts = courseName.Split(' ');
+            if (parts.Length != 2 || !int.TryParse(parts[1], out int courseNumber))
+            {
+                throw new ArgumentException("The course name must be in the format 'DEPT 123'.");
+            }
+
+            int departmentNumber;
+            switch(parts[0])
+            {
+                case "CIS": departmentNumber = 0; break;
+                case "MATH": departmentNumber = 1; break;
+                case "CHM": departmentNumber = 2; break;
+                case "ENGL": departmentNumber = 3; break;
+                default: throw new Exception();
+            }
+
+            int newCourseId = int.Parse($"{departmentNumber}{courseNumber:D3}");
+            Random random = new Random();
+            int scheduledCourseId = random.Next(100, 1000);
+
+            var newScheduledCourse = new ScheduledCourse
+            {
+                ScheduledCourseId = scheduledCourseId,
+                ScheduleId = 1,
+                CourseId = newCourseId,
+                Status = "In Progress"
+            };
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                // Construct your SQL command here, using parameters to avoid SQL injection
+                string commandText = "INSERT INTO Schedule (ScheduleId, TermId, StudentId) VALUES (@ScheduledCourseId, @TermId, @StudentId) INSERT INTO ScheduledCourse (ScheduledCourseId, ScheduleId, CourseId, Status) VALUES (@ScheduledCourseId, @ScheduleId, @CourseId, @Status)";
+                using (var command = new SqlCommand(commandText, connection))
+                {
+                    // Add parameters with values
+                    command.Parameters.AddWithValue("@ScheduledCourseId", newScheduledCourse.ScheduledCourseId);
+                    command.Parameters.AddWithValue("@ScheduleId", newScheduledCourse.ScheduleId);
+                    command.Parameters.AddWithValue("@CourseId", newScheduledCourse.CourseId);
+                    command.Parameters.AddWithValue("@Status", newScheduledCourse.Status);
+                    command.Parameters.AddWithValue("@TermId", TermId);
+                    command.Parameters.AddWithValue("@StudentId", SessionId);
+
+                    // Execute the command
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public void DeleteScheduledCourse(string courseName)
+        {
+            Debug.WriteLine(courseName);
+            var parts = courseName.Split(' ');
+            if (parts.Length != 2 || !int.TryParse(parts[1], out int courseNumber))
+            {
+                throw new ArgumentException("The course name must be in the format 'DEPT 123'.");
+            }
+
+            int departmentNumber;
+            switch (parts[0])
+            {
+                case "CIS": departmentNumber = 0; break;
+                case "MATH": departmentNumber = 1; break;
+                case "CHM": departmentNumber = 2; break;
+                case "ENGL": departmentNumber = 3; break;
+                default: throw new Exception();
+            }
+
+            int newCourseId = int.Parse($"{departmentNumber}{courseNumber:D3}");
+
+            Debug.WriteLine("" + newCourseId);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "DELETE FROM ScheduledCourse WHERE CourseId = @ScheduledCourseId AND ScheduleId = 1";
+                var command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@ScheduledCourseId", newCourseId);
+                command.ExecuteNonQuery();
+            }
+        }
 
     }
 }

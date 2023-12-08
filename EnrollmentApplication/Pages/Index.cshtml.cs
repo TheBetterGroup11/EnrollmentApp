@@ -22,11 +22,5 @@ namespace EnrollmentApplication.Pages
         {
 
         }
-
-        public IActionResult OnGetFetchStudents()
-        {
-            Students = _dataAccess.GetAllStudents(); // Fetch students
-            return Page(); // Refresh the page with the new data
-        }
     }
 }

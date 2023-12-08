@@ -45,6 +45,35 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.styled-table1 {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .styled-table th, .styled-table td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .styled-table th {
+        background-color: #512888;
+        color: white;
+        width: 10%
+    }
+
+    .styled-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .styled-table tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+
 .styled-table {
     width: 100%;
     border-collapse: collapse;
@@ -113,6 +142,19 @@ body {
         background-color: #0056b3;
     }
 
+.submit-button2 {
+    width: 25%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #512888;
+    color: white;
+    cursor: pointer;
+}
+
+    .submit-button2:hover {
+        background-color: #0056b3;
+    }
 
 .form-group {
     margin-bottom: 15px;
@@ -194,6 +236,3 @@ body {
     background-color: mediumpurple;
 }
 
-h2 {
-    text-align: center;
-}

@@ -1,6 +1,53 @@
 ﻿@page
 @{
     ViewData["Title"] = "Course History";
+
+    <header>
+        <link rel="stylesheet" type="text/css" href="site.css" />
+        <style>
+            table {
+                border: 1px black;
+            }
+        </style>
+    </header>
+    <body>
+        <div class="default-form">
+            <h2>Course History</h2>
+            <table class="styled-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Term</th>
+                </tr>
+                <tr>
+                    <td>CIS 115</td>
+                    <td>Introduction to Computer Science</td>
+                    <td>In Progress</td>
+                    <td>Fall 2023</td>
+                </tr>
+                <tr>
+                    <td>CHM 210</td>
+                    <td>Chemistry 1</td>
+                    <td>In Progress</td>
+                    <td>Fall 2023</td>
+                </tr>
+                <tr>
+                    <td>MATH 220</td>
+                    <td>Analytical Geometry and Calculus 1</td>
+                    <td>In Progress</td>
+                    <td>Fall 2023</td>
+                </tr>
+                <tr>
+                    <td>ENGL 210</td>
+                    <td>Expository Writing 1</td>
+                    <td>In Progress</td>
+                    <td>Fall 2023</td>
+                </tr>
+            </table>
+
+        </div>
+    </body>
 }
-<h1>@ViewData["Title"]</h1>
+
 
